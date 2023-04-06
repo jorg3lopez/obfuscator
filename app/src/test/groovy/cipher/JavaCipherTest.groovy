@@ -2,16 +2,16 @@ package cipher
 
 import spock.lang.Specification
 
-class CipherTest extends Specification{
+class JavaCipherTest extends Specification{
 
     def 'encrypt message'() {
         setup:
         def cipher = new JavaCipher()
         when:
-        def message = "Hello world"
+        def message = "a b C Z"
         def key = 5
         def encrytedMessage = cipher.encrypt(message, key)
         then:
-        encrytedMessage == null
+        encrytedMessage == "f g H E"
     }
 }

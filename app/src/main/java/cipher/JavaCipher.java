@@ -2,8 +2,7 @@ package cipher;
 
 public class JavaCipher implements Cipher{
     private String message;
-    private String encryptedMessage;
-    private String decryptedMessage;
+    private final String ALPHABETLOWERCASE= "abcdefghijklmnopqrstuvwxyz";
     private final int KEY = 7;
 
     public JavaCipher() {
@@ -20,7 +19,42 @@ public class JavaCipher implements Cipher{
 
     @Override
     public String encrypt(String in, int shiftKey) {
-        return null;
+
+        StringBuffer encryptedMessage = new StringBuffer();
+        byte [] message = in.getBytes();
+
+        for (byte letter : message) {
+
+            // check if it is a space
+            if (letter == ' ') {
+                encryptedMessage.append((char)letter);
+                continue;
+            }
+
+            // encrypt lowercase
+            if (letter <= 122 && letter >= 97) {
+                encryptedMessage.append(encryptCharacter(letter, shiftKey));
+            }
+
+            // encrypt uppercase
+            if (letter <= 90 && letter >= 65) {
+                byte lower = (byte)(letter + 32);
+                encryptedMessage.append((char)(encryptCharacter(lower, shiftKey) - 32));
+            }
+
+        }
+
+        return encryptedMessage.toString();
+    }
+
+    private char encryptCharacter(byte letter, int shiftKey) {
+        // original position
+        int originalPos = (letter - 97);
+
+        // new position
+        int index = (originalPos + shiftKey) % 26;
+
+        return ALPHABETLOWERCASE.charAt(index);
     }
 
     @Override
